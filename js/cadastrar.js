@@ -1,55 +1,33 @@
-document.querySelector("#botao-cadastrar").addEventListener("click", () => {
+document.querySelector("#button_cadastrar").addEventListener("click", () => {
 
     const form = document.querySelector("form")
 
-    const tarefa = {
-        titulo: form.titulo.value,
-        descricao: form.descricao.value,
-        pontos: form.pontos.value
-    }
+    // Criar um objeto para armazenar as informações do gasto
+    const gasto = {
+        id: "id" + new Date().getTime(),
+        title: form.elements['first_name'].value,
+        description: form.elements['description'].value,
+        number: form.elements['number'].value,
+        category: form.elements['category'].value
+    };
 
-    validar(tarefa)
+    // Exibir os valores para teste (pode remover isso depois)
+    console.log('Informações do Gasto:', gasto);
 
-    salvar(tarefa)
+    salvar(gasto)
 
 })
 
-function salvar (tarefa) {
-    const tarefas = JSON.parse( localStorage.getItem("tarefas") ) || []
-    tarefas.push(tarefa)
-    localStorage.setItem("tarefas", JSON.stringify(tarefas))
+function salvar(gasto) {
+    const gastos = JSON.parse(localStorage.getItem("gastos")) || [];
+    gastos.push(gasto)
+    localStorage.setItem("gastos", JSON.stringify(gastos))
     window.location.href = "index.html"
 }
 
-function validar(tarefa){
-    limparErros()
 
-    if (tarefa.titulo.trim() == ""){
-        document.querySelector("#titulo").classList.add("is-error")
-        document.querySelector("#titulo-erro").innerText = "o título é obrigatório"
-    }
+function clear_storage() {
+    console.log("limpando o storage");
+    localStorage.clear()
 
-    if (tarefa.descricao.trim() == "" || tarefa.descricao.length < 10){
-        document.querySelector("#descricao").classList.add("is-error")
-        document.querySelector("#descricao-erro").innerText = "a descrição deve ter pelo menos 10 caracteres"
-    }
-    
-    if (tarefa.pontos <= 0){
-        document.querySelector("#pontos").classList.add("is-error")
-        document.querySelector("#pontos-erro").innerText = "pontos deve ser maior que zero"
-    }
 }
-
-function limparErros(){
-    const campos = document
-                .querySelectorAll("input.is-error, textarea.is-error")
-
-    campos
-        .forEach(input => input.classList.remove("is-error") )
-
-    document.querySelectorAll(".nes-field span")
-            .forEach( span => span.innerText = "")
-
-    
-}
-

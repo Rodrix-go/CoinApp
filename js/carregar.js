@@ -1,23 +1,58 @@
-const tarefas = JSON.parse( localStorage.getItem("tarefas") ) || []
+const gastos = JSON.parse(localStorage.getItem("gastos")) || []
 
-tarefas.forEach(tarefa => card(tarefa))
+gastos.forEach(gasto => card(gasto))
 
-function card (tarefa){
-    const cardTarefa = `
-        <div class="nes-container with-title is-centered">
-            <p class="title">${tarefa.titulo}</p>
-            <p>${tarefa.descricao}</p>
-            <a href="#" class="nes-badge is-icon">
-                <span class="is-warning"><i class="nes-icon coin is-small"></i></span>
-                <span class="is-primary">${tarefa.pontos}</span>
-            </a>
-            <progress class="nes-progress is-success" value="50" max="100"></progress>
-            <button type="button" class="nes-btn is-primary">-</button>
-            <button type="button" class="nes-btn is-error">apagar</button>
-            <button type="button" class="nes-btn is-primary">+</button>
-        </div>    
-    ` 
+function card(gasto) {
+
+    icon = defineIcon(gasto)
+
+    const cardGasto = `
+    <div class="card horizontal">
+        <div class="card-content">
+            <span class="card-title">${gasto.title}</span>
+            <p>
+                R$ ${gasto.number} <br>
+                <br>
+                <a onclick="clear_gasto('${gasto.id}')" class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
+                <a href="#modal1" class="btn-floating btn-small waves-effect waves-light blue modal-trigger"><i class="material-icons">edit</i></a>
+                </p>
+                </div>
+                <div class="card-content">
+                <i class="material-icons medium">${icon}</i> <br>
+                </div>
+                </div>
+                </div>
+                `
     const card = document.createElement("div")
-    card.innerHTML = cardTarefa
-    document.querySelector("#lista-de-tarefas").appendChild(card)
+    card.classList = "col s6 m6 l3"
+    card.id = gasto.id
+    card.innerHTML = cardGasto
+    document.querySelector("#dia1").appendChild(card)
+}
+
+
+function defineIcon(gasto) {
+
+    const gastoCategory = gasto.category
+    var icon_temp = null
+    switch (gastoCategory) {
+        case "Alimentos":
+            icon_temp = 'cake'
+            break;
+
+        case "Roupas":
+            icon_temp = 'wc'
+            break;
+
+        case "Saúde":
+            icon_temp = 'sentiment_very_satisfied'
+            break;
+
+        case "Diversão":
+            icon_temp = 'beach_access'
+            break;
+    }
+    return icon_temp;
+
+
 }

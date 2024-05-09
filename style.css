@@ -1,3 +1,18 @@
 ul.dropdown-content.select-dropdown li span {
     color: #000; /* no need for !important :) */
 }
+.apagando{
+    animation: fadeout 2s;
+}
+
+@keyframes fadeout {
+    from{
+        opacity: 1;
+    }
+    to{
+        opacity: 0;
+    }
+
+
+
+}
